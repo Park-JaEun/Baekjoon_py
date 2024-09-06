@@ -8,20 +8,23 @@
 # 각 테스트 케이스에 대해 P를 출력한다.
 ### 
 
+def isPrime(NUM):
+    if NUM == 1:
+         return True
+
+    for num in range(2, NUM):
+            if(NUM % num) == 0:
+                return True
+
+    return False
+
+N = int(input())
+
+temp = map(int,input().split())
+for num in temp:
+    if isPrime(num) is True:
+        N -= 1
+
+print(N)
 
 
-n = int(input())
-s_list = [input().split() for _ in range(n)]
-
-for a in s_list:
-    # print(s_list)
-    n = list(a[1])
-    # print(n)
-
-    word = []
-
-    for num in n:
-        # print(num*int(a[0]))
-        word.append(num*int(a[0]))
-    
-    print("".join(word))
