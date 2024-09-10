@@ -1,32 +1,38 @@
 ###
 # 문제
-# 알파벳 소문자로 이루어진 N개의 단어가 들어오면 아래와 같은 조건에 따라 정렬하는 프로그램을 작성하시오.
+# 왕비를 피해 일곱 난쟁이들과 함께 평화롭게 생활하고 있던 백설공주에게 위기가 찾아왔다. 일과를 마치고 돌아온 난쟁이가 일곱 명이 아닌 아홉 명이었던 것이다.
 
-# 길이가 짧은 것부터
-# 길이가 같으면 사전 순으로
-# 단, 중복된 단어는 하나만 남기고 제거해야 한다.
+# 아홉 명의 난쟁이는 모두 자신이 "백설 공주와 일곱 난쟁이"의 주인공이라고 주장했다. 뛰어난 수학적 직관력을 가지고 있던 백설공주는, 다행스럽게도 일곱 난쟁이의 키의 합이 100이 됨을 기억해 냈다.
+
+# 아홉 난쟁이의 키가 주어졌을 때, 백설공주를 도와 일곱 난쟁이를 찾는 프로그램을 작성하시오.
 
 # 입력
-# 첫째 줄에 단어의 개수 N이 주어진다. (1 ≤ N ≤ 20,000) 둘째 줄부터 N개의 줄에 걸쳐 알파벳 소문자로 이루어진 단어가 한 줄에 하나씩 주어진다. 주어지는 문자열의 길이는 50을 넘지 않는다.
+# 아홉 개의 줄에 걸쳐 난쟁이들의 키가 주어진다. 주어지는 키는 100을 넘지 않는 자연수이며, 아홉 난쟁이의 키는 모두 다르며, 가능한 정답이 여러 가지인 경우에는 아무거나 출력한다.
 
 # 출력
-# 조건에 따라 정렬하여 단어들을 출력한다.
+# 일곱 난쟁이의 키를 오름차순으로 출력한다. 일곱 난쟁이를 찾을 수 없는 경우는 없다.
 ### 
 
-def compare(a, b):
-    if len(a) == len(b):
-        return a < b
-    return len(a) < len(b)
+def find_dwarfs(dwarfs):
+    def dfs(real_dwarfs, total, index):
+        if total == 100 and len(real_dwarfs) == 7:
+            real_dwarfs.sort()
+            for dwarf in real_dwarfs:
+                print(dwarf)
+            return True
+        if total > 100 or len(real_dwarfs) >= 7:
+            return False
 
-N = int(input())
-words = []
+        for i in range(index, 9):
+            if dfs(real_dwarfs + [dwarfs[i]], total + dwarfs[i], i + 1):
+                return True
+        return False
 
-for _ in range(N):
-    temp = input()
-    if temp not in words:  # 중복 확인 후 없는 단어만 리스트에 추가
-        words.append(temp)
+    dfs([], 0, 0)
 
-words.sort(key=lambda x: (len(x), x))  # compare 대신 람다 함수로 정렬
 
-for word in words:
-    print(word)
+# 입력 받기
+dwarfs = [int(input()) for _ in range(9)]
+
+# 일곱 난쟁이 찾기
+find_dwarfs(dwarfs)
